@@ -3,7 +3,6 @@ package michal.zawadzki.workdayappui;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,7 +17,7 @@ public class WorkdayappUi extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        applicationContext.publishEvent(new StageReadyEvent(primaryStage));
+        applicationContext.publishEvent(new ScreenEvent(primaryStage, "list"));
     }
 
     @Override public void stop() throws Exception {
@@ -26,16 +25,22 @@ public class WorkdayappUi extends Application {
         Platform.exit();
     }
 
-    public static class StageReadyEvent extends ApplicationEvent {
+    public static class ScreenEvent extends ApplicationEvent {
 
-        public StageReadyEvent(Stage primaryStage) {
+        private String screenName;
+
+        public ScreenEvent(Stage primaryStage, String screenName) {
             super(primaryStage);
+            this.screenName = screenName;
         }
 
         public Stage getStage() {
             return ((Stage) getSource());
         }
 
+        public String getScreenName() {
+            return screenName;
+        }
     }
 
 }

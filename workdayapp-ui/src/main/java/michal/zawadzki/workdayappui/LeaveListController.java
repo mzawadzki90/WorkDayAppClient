@@ -5,13 +5,16 @@
 package michal.zawadzki.workdayappui;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -28,11 +31,21 @@ public class LeaveListController {
 
     private final WorkdayappClient workdayappClient;
 
+    private final ApplicationContext applicationContext;
+
+    private final ScreenInitializer screenInitializer;
+
+    private Stage stage;
+
     @FXML
     public TableView<LeaveRequestDto> leaveRequests;
 
-    public LeaveListController(WorkdayappClient workdayappClient) {
-        this.workdayappClient = workdayappClient;
+    public LeaveListController(WorkdayappClient workdayappClient,
+                               ApplicationContext applicationContext,
+                               ScreenInitializer screenInitializer) {
+        this.workdayappClient   = workdayappClient;
+        this.applicationContext = applicationContext;
+        this.screenInitializer  = screenInitializer;
     }
 
     @FXML
@@ -61,4 +74,11 @@ public class LeaveListController {
         };
     }
 
+    public void onAddNewClick(ActionEvent actionEvent) {
+        if (stage == null) {
+            stage = screenInitializer.getStage();
+        }
+
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "details"));
+    }
 }

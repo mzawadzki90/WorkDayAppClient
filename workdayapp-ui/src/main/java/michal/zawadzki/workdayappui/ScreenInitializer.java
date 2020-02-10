@@ -13,33 +13,47 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class StageInitializer implements ApplicationListener<WorkdayappUi.StageReadyEvent> {
-
-    @Value("classpath:/leave-list.fxml")
-    private Resource chartResource;
+public class ScreenInitializer implements ApplicationListener<WorkdayappUi.ScreenEvent> {
 
     private final String applicationTitle;
 
     private final ApplicationContext applicationContext;
 
-    public StageInitializer(@Value("${spring.application.ui.title}") String applicationTitle,
-                            ApplicationContext applicationContext) {
-        this.applicationTitle = applicationTitle;
+    private final ScreenController screenController;
+
+    private Stage stage;
+
+    public ScreenInitializer(@Value("${spring.application.ui.title}") String applicationTitle,
+                             ApplicationContext applicationContext,
+                             ScreenController screenController) {
+        this.applicationTitle   = applicationTitle;
         this.applicationContext = applicationContext;
+        this.screenController   = screenController;
     }
 
     @Override
-    public void onApplicationEvent(WorkdayappUi.StageReadyEvent event) {
+    public void onApplicationEvent(WorkdayappUi.ScreenEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(chartResource.getURL());
+            final String screenName = event.getScreenName();
+            final Resource screen = screenController.getScreenByName(screenName);
+            FXMLLoader fxmlLoader = new FXMLLoader(screen.getURL());
             fxmlLoader.setControllerFactory(applicationContext::getBean);
             Parent parent = fxmlLoader.load();
-            Stage stage = event.getStage();
+
+            if (stage == null) {
+                stage = event.getStage();
+            }
+
             stage.setScene(new Scene(parent));
             stage.setTitle(applicationTitle);
             stage.show();
+
         } catch (IOException e) {
             throw new RuntimeException();
         }
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }
