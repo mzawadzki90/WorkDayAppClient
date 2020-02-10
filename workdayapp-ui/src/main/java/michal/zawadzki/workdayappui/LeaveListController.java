@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
@@ -38,6 +39,9 @@ public class LeaveListController {
     private Stage stage;
 
     @FXML
+    public TextField availableDaysTF;
+
+    @FXML
     public TableView<LeaveRequestDto> leaveRequests;
 
     public LeaveListController(WorkdayappClient workdayappClient,
@@ -50,12 +54,16 @@ public class LeaveListController {
 
     @FXML
     public void initialize() {
+        final int freeDays = workdayappClient.getFreeDays(1);
+        availableDaysTF.setText(String.valueOf(freeDays));
+
         leaveRequests.getColumns().stream().filter(column -> DATE_COLUMN_IDS.contains(column.getId()))
                      .map(column -> (TableColumn<LeaveRequestDto, Date>) column)
                      .forEach(dateColumn -> dateColumn.setCellFactory(dateCellFactory()));
 
+
         final ObservableList<LeaveRequestDto> items = leaveRequests.getItems();
-        items.addAll(workdayappClient.listByWorkerId(1).getLeaveRequests());
+        items.addAll(workdayappClient.listLeaveRequestsByWorkerId(1).getLeaveRequests());
     }
 
     private Callback<TableColumn<LeaveRequestDto, Date>, TableCell<LeaveRequestDto, Date>> dateCellFactory() {

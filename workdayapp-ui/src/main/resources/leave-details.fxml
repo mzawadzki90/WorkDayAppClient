@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -96,8 +97,8 @@
                                 <Insets right="50.0"/>
                             </padding>
                         </Label>
-                        <ComboBox minWidth="-Infinity" prefHeight="30.0" prefWidth="800.0" GridPane.columnIndex="1"
-                                  GridPane.rowIndex="1">
+                        <ComboBox fx:id="leaveTypeComboBox" minWidth="-Infinity" prefHeight="30.0" prefWidth="800.0"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets left="20.0"/>
                             </GridPane.margin>
@@ -150,31 +151,21 @@
                                 <Insets top="20.0"/>
                             </GridPane.margin>
                         </Label>
-                        <ComboBox layoutX="494.0" layoutY="113.0" minWidth="-Infinity" prefHeight="30.0"
-                                  prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <ComboBox fx:id="replacementComboBox" layoutX="494.0" layoutY="113.0" minWidth="-Infinity"
+                                  prefHeight="30.0" prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                             <GridPane.margin>
                                 <Insets left="20.0"/>
                             </GridPane.margin>
                         </ComboBox>
-                        <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <TextArea fx:id="notesTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
+                                  GridPane.rowIndex="6">
                             <GridPane.margin>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                             </GridPane.margin>
                         </TextArea>
-                        <TextField maxWidth="-Infinity" prefHeight="30.0" prefWidth="800.0" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="2">
-                            <GridPane.margin>
-                                <Insets left="20.0" right="20.0"/>
-                            </GridPane.margin>
-                        </TextField>
-                        <TextField layoutX="404.0" layoutY="163.0" maxWidth="-Infinity" prefHeight="30.0"
-                                   prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <GridPane.margin>
-                                <Insets left="20.0" right="20.0"/>
-                            </GridPane.margin>
-                        </TextField>
-                        <TextField disable="true" layoutX="394.0" layoutY="213.0" maxWidth="-Infinity" prefHeight="30.0"
-                                   prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <TextField fx:id="labourDaysInput" disable="true" layoutX="394.0" layoutY="213.0"
+                                   maxWidth="-Infinity" prefHeight="30.0" prefWidth="800.0" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="4">
                             <GridPane.margin>
                                 <Insets left="20.0" right="20.0"/>
                             </GridPane.margin>
@@ -185,15 +176,15 @@
                                 <Button layoutX="394.0" layoutY="915.0" maxHeight="-Infinity" maxWidth="-Infinity"
                                         minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
                                         prefHeight="50.0" prefWidth="150.0" text="Wyślij" GridPane.columnIndex="1"
-                                        GridPane.rowIndex="7">
+                                        GridPane.rowIndex="7" onAction="#onSendClick">
                                     <font>
                                         <Font name="System Bold" size="18.0"/>
                                     </font>
                                 </Button>
                                 <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                                        minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0"
-                                        text="Odrzuć" GridPane.columnIndex="1" GridPane.rowIndex="7"
-                                        onAction="#onRejectClick">
+                                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onRejectClick"
+                                        prefHeight="50.0" prefWidth="150.0" text="Odrzuć" GridPane.columnIndex="1"
+                                        GridPane.rowIndex="7">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -214,8 +205,8 @@
                             <children>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1046.0" spacing="50.0">
                                     <children>
-                                        <Label maxHeight="-Infinity" text="Nowy wniosek urlopowy:"
-                                               GridPane.rowIndex="1">
+                                        <Label maxHeight="-Infinity" prefHeight="52.0" prefWidth="445.0"
+                                               text="Nowy wniosek urlopowy:" GridPane.rowIndex="1">
                                             <font>
                                                 <Font name="System Bold Italic" size="24.0"/>
                                             </font>
@@ -228,7 +219,7 @@
                                         <Insets left="10.0"/>
                                     </padding>
                                 </HBox>
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="675.0" spacing="10.0">
+                                <HBox alignment="CENTER" prefHeight="115.0" prefWidth="876.0" spacing="10.0">
                                     <children>
                                         <Label maxHeight="-Infinity" minHeight="-Infinity" prefWidth="160.0"
                                                text="Dostępne dni wolne:" GridPane.rowIndex="1">
@@ -239,7 +230,7 @@
                                                 <Insets bottom="10.0" top="10.0"/>
                                             </HBox.margin>
                                         </Label>
-                                        <TextField fx:id="availableDaysTF" disable="true" maxHeight="-Infinity"
+                                        <TextField fx:id="freeDaysInput" disable="true" maxHeight="-Infinity"
                                                    minHeight="-Infinity" prefWidth="100.0">
                                             <HBox.margin>
                                                 <Insets bottom="10.0" top="10.0"/>
@@ -249,6 +240,18 @@
                                 </HBox>
                             </children>
                         </HBox>
+                        <DatePicker fx:id="sinceDatePicker" onAction="#onSinceDateChanged" prefHeight="30.0"
+                                    prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <GridPane.margin>
+                                <Insets left="20.0" right="20.0"/>
+                            </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker fx:id="tillDatePicker" layoutX="318.0" layoutY="170.0" onAction="#onTillDateChanged"
+                                    prefHeight="30.0" prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <GridPane.margin>
+                                <Insets left="20.0" right="20.0"/>
+                            </GridPane.margin>
+                        </DatePicker>
                     </children>
                 </GridPane>
             </center>
