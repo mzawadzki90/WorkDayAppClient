@@ -2,7 +2,7 @@
  created on 19.01.2020
  by Michał Zawadzki
 */
-package michal.zawadzki.workdayappui;
+package michal.zawadzki.workdayappui.control;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +18,8 @@ import michal.zawadzki.workdayappclient.api.DictionariesDto;
 import michal.zawadzki.workdayappclient.api.DictionaryDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveType;
+import michal.zawadzki.workdayappui.ScreenInitializer;
+import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -94,6 +96,7 @@ public class LeaveDetailsController {
         replacementComboBox.getSelectionModel().selectFirst();
     }
 
+    @FXML
     public void onSendClick(ActionEvent actionEvent) {
         final Optional<LeaveRequestDto> leaveRequestDto = createLeaveRequestDto();
 
@@ -106,14 +109,17 @@ public class LeaveDetailsController {
 
     }
 
+    @FXML
     public void onRejectClick(ActionEvent actionEvent) {
         applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "list"));
     }
 
+    @FXML
     public void onSinceDateChanged(ActionEvent actionEvent) {
         setLabourDays();
     }
 
+    @FXML
     public void onTillDateChanged(ActionEvent actionEvent) {
         setLabourDays();
     }
