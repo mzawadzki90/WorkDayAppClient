@@ -2,7 +2,7 @@
  created on 19.01.2020
  by Michał Zawadzki
 */
-package michal.zawadzki.workdayappui;
+package michal.zawadzki.workdayappui.control;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
+import michal.zawadzki.workdayappui.ScreenInitializer;
+import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -66,6 +68,15 @@ public class LeaveListController {
         items.addAll(workdayappClient.listLeaveRequestsByWorkerId(1).getLeaveRequests());
     }
 
+    @FXML
+    public void onAddNewClick(ActionEvent actionEvent) {
+        if (stage == null) {
+            stage = screenInitializer.getStage();
+        }
+
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "details"));
+    }
+
     private Callback<TableColumn<LeaveRequestDto, Date>, TableCell<LeaveRequestDto, Date>> dateCellFactory() {
         return column -> new TableCell<>() {
             private final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -82,11 +93,4 @@ public class LeaveListController {
         };
     }
 
-    public void onAddNewClick(ActionEvent actionEvent) {
-        if (stage == null) {
-            stage = screenInitializer.getStage();
-        }
-
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "details"));
-    }
 }

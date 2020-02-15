@@ -1,0 +1,39 @@
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<MenuBar xmlns="http://javafx.com/javafx"
+		 xmlns:fx="http://javafx.com/fxml"
+		 fx:controller="michal.zawadzki.workdayappui.control.MenuController"
+		 prefHeight="25.0" prefWidth="1920.0"
+>
+	<menus>
+		<Menu fx:id="signOutM" mnemonicParsing="false" text="Wyloguj się"/>
+		<Menu fx:id="yourProfileM" mnemonicParsing="false" text="Twój profil">
+			<items>
+				<MenuItem fx:id="cvMI" mnemonicParsing="false" text="Twoje CV"/>
+				<MenuItem fx:id="occupationHistoryMI" mnemonicParsing="false" text="Historia Zatrudnienia"/>
+			</items>
+		</Menu>
+		<Menu fx:id="yourWorkTimeM" mnemonicParsing="false" text="Twój czas pracy">
+			<items>
+				<MenuItem fx:id="addTaskMI" mnemonicParsing="false" text="Dodaj zadania"/>
+				<MenuItem fx:id="sendReportMI" mnemonicParsing="false" text="Wyślij raport"/>
+				<MenuItem fx:id="lastMonthWorktimeMI" mnemonicParsing="false" text="Ostatni miesiac"/>
+			</items>
+		</Menu>
+		<Menu fx:id="yourLeavesM" mnemonicParsing="false" text="Twoje Urlopy">
+			<items>
+				<MenuItem fx:id="sendLeaveRequestMI" mnemonicParsing="false" text="Złóż nowy wniosek"/>
+				<MenuItem fx:id="yourLeaveListMI" mnemonicParsing="false" text="Lista wniosków"/>
+			</items>
+		</Menu>
+		<Menu fx:id="yourEquipmentM" mnemonicParsing="false" text="Twoje sprzęty">
+			<items>
+				<MenuItem fx:id="rentEquipmentMI" mnemonicParsing="false" text="Wypożycz"/>
+				<MenuItem fx:id="returnEquipmentMI" mnemonicParsing="false" text="Zwróć"/>
+				<MenuItem fx:id="equipmentListMI" mnemonicParsing="false" text="Lista sprzętów"/>
+			</items>
+		</Menu>
+		<Menu fx:id="searchForWorkerM" mnemonicParsing="false" text="Wyszukaj pracownika"/>
+	</menus>
+</MenuBar>
