@@ -6,7 +6,6 @@ package michal.zawadzki.workdayappui.control;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -35,6 +34,7 @@ import static java.util.Calendar.DAY_OF_WEEK;
 import static java.util.Calendar.SATURDAY;
 import static java.util.Calendar.SUNDAY;
 import static java.util.Calendar.getInstance;
+import static michal.zawadzki.workdayappui.util.AlertUtil.showErrorAlert;
 
 @Component
 public class LeaveDetailsController {
@@ -248,14 +248,6 @@ public class LeaveDetailsController {
         }
 
         return true;
-    }
-
-    private void showErrorAlert(String errorMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Błędne dane");
-        alert.setContentText(errorMessage);
-
-        alert.showAndWait();
     }
 
 }
