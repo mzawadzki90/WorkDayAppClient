@@ -17,7 +17,7 @@ public class WorkdayappUi extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        applicationContext.publishEvent(new ScreenEvent(primaryStage, "list"));
+        applicationContext.publishEvent(new ScreenEvent(primaryStage, "login"));
     }
 
     @Override public void stop() throws Exception {
@@ -27,7 +27,7 @@ public class WorkdayappUi extends Application {
 
     public static class ScreenEvent extends ApplicationEvent {
 
-        private String screenName;
+        private final String screenName;
 
         public ScreenEvent(Stage primaryStage, String screenName) {
             super(primaryStage);

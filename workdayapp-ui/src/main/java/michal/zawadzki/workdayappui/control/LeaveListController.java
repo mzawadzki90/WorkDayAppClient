@@ -11,7 +11,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
@@ -37,8 +36,6 @@ public class LeaveListController {
     private final ApplicationContext applicationContext;
 
     private final ScreenInitializer screenInitializer;
-
-    private Stage stage;
 
     @FXML
     public TextField availableDaysTF;
@@ -70,11 +67,7 @@ public class LeaveListController {
 
     @FXML
     public void onAddNewClick(ActionEvent actionEvent) {
-        if (stage == null) {
-            stage = screenInitializer.getStage();
-        }
-
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "details"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "details"));
     }
 
     private Callback<TableColumn<LeaveRequestDto, Date>, TableCell<LeaveRequestDto, Date>> dateCellFactory() {

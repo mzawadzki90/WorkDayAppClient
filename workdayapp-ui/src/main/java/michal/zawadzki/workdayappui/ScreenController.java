@@ -12,6 +12,9 @@ import java.util.Optional;
 @Component
 public class ScreenController {
 
+    @Value("classpath:/login.fxml")
+    private Resource loginForm;
+
     @Value("classpath:/leave-list.fxml")
     private Resource leaveList;
 
@@ -23,6 +26,7 @@ public class ScreenController {
     @PostConstruct
     public void init() {
         screenMap = new HashMap<>();
+        screenMap.put("login", loginForm);
         screenMap.put("list", leaveList);
         screenMap.put("details", leaveDetails);
     }
