@@ -25,6 +25,12 @@
 				<Image url="@WorkDay_App_logo2.png"/>
 			</image>
 		</ImageView>
+		<Label fx:id="appUserInfo" alignment="CENTER" contentDisplay="CENTER" layoutX="1522.0" layoutY="1.0"
+			   prefHeight="40.0" prefWidth="400.0" AnchorPane.rightAnchor="20.0">
+			<font>
+				<Font name="System Bold" size="16.0"/>
+			</font>
+		</Label>
 		<BorderPane prefHeight="1080.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
 					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
 			<top>
@@ -73,8 +79,7 @@
 									</HBox.margin>
 								</Label>
 								<TextField fx:id="availableDaysTF" disable="true" maxHeight="-Infinity"
-										   minHeight="-Infinity"
-										   prefHeight="40.0" prefWidth="100.0">
+										   minHeight="-Infinity" prefHeight="40.0" prefWidth="100.0">
 									<HBox.margin>
 										<Insets bottom="10.0" top="10.0"/>
 									</HBox.margin>
@@ -89,12 +94,12 @@
 										<PropertyValueFactory property="type"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn minWidth="100.0" prefWidth="200.0" text="Od" fx:id="leaveRequestSince">
+								<TableColumn fx:id="leaveRequestSince" minWidth="100.0" prefWidth="200.0" text="Od">
 									<cellValueFactory>
 										<PropertyValueFactory property="since"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn minWidth="100.0" prefWidth="200.0" text="Do" fx:id="leaveRequestTill">
+								<TableColumn fx:id="leaveRequestTill" minWidth="100.0" prefWidth="200.0" text="Do">
 									<cellValueFactory>
 										<PropertyValueFactory property="till"/>
 									</cellValueFactory>
@@ -104,14 +109,14 @@
 										<PropertyValueFactory property="status"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn minWidth="200.0" prefWidth="300.0" text="Data złożenia"
-											 fx:id="leaveRequestCreatedAt">
+								<TableColumn fx:id="leaveRequestCreatedAt" minWidth="200.0" prefWidth="300.0"
+											 text="Data złożenia">
 									<cellValueFactory>
 										<PropertyValueFactory property="createdAt"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn minWidth="200.0" prefWidth="300.0" text="Data modyfikacji"
-											 fx:id="leaveRequestModifiedAt">
+								<TableColumn fx:id="leaveRequestModifiedAt" minWidth="200.0" prefWidth="300.0"
+											 text="Data modyfikacji">
 									<cellValueFactory>
 										<PropertyValueFactory property="modifiedAt"/>
 									</cellValueFactory>
@@ -124,9 +129,9 @@
 								<Insets bottom="20.0" left="50.0" right="50.0" top="20.0"/>
 							</padding>
 						</TableView>
-						<Button mnemonicParsing="false" text="Dodaj nowy" GridPane.columnIndex="1"
-								GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-								onAction="#onAddNewClick">
+						<Button mnemonicParsing="false" onAction="#onAddNewClick" text="Dodaj nowy"
+								GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2"
+								GridPane.valignment="CENTER">
 							<GridPane.margin>
 								<Insets right="50.0"/>
 							</GridPane.margin>

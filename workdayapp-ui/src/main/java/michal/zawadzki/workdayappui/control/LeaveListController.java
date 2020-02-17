@@ -7,6 +7,7 @@ package michal.zawadzki.workdayappui.control;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
+import michal.zawadzki.workdayappclient.api.worker.login.WorkerLoginDto;
+import michal.zawadzki.workdayappui.ApplicationUser;
 import michal.zawadzki.workdayappui.ScreenInitializer;
 import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
@@ -37,23 +40,34 @@ public class LeaveListController {
 
     private final ScreenInitializer screenInitializer;
 
+    private final ApplicationUser applicationUser;
+
+    private WorkerLoginDto workerLoginDto;
+
     @FXML
     public TextField availableDaysTF;
 
     @FXML
     public TableView<LeaveRequestDto> leaveRequests;
 
+    @FXML
+    public Label appUserInfo;
+
     public LeaveListController(WorkdayappClient workdayappClient,
                                ApplicationContext applicationContext,
-                               ScreenInitializer screenInitializer) {
+                               ScreenInitializer screenInitializer,
+                               ApplicationUser applicationUser) {
         this.workdayappClient   = workdayappClient;
         this.applicationContext = applicationContext;
         this.screenInitializer  = screenInitializer;
+        this.applicationUser    = applicationUser;
     }
 
     @FXML
     public void initialize() {
-        final int freeDays = workdayappClient.getFreeDays(1);
+        workerLoginDto = applicationUser.getApplicationUser();
+        setUserInfo();
+        final int freeDays = workdayappClient.getFreeDays(workerLoginDto.getId());
         availableDaysTF.setText(String.valueOf(freeDays));
 
         leaveRequests.getColumns().stream().filter(column -> DATE_COLUMN_IDS.contains(column.getId()))
@@ -62,12 +76,18 @@ public class LeaveListController {
 
 
         final ObservableList<LeaveRequestDto> items = leaveRequests.getItems();
-        items.addAll(workdayappClient.listLeaveRequestsByWorkerId(1).getLeaveRequests());
+        items.addAll(workdayappClient.listLeaveRequestsByWorkerId(workerLoginDto.getId()).getLeaveRequests());
     }
 
     @FXML
     public void onAddNewClick(ActionEvent actionEvent) {
         applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "details"));
+    }
+
+    private void setUserInfo() {
+        appUserInfo.setText(
+                String.format("Witaj %s %s (%s)", workerLoginDto.getFirstName(), workerLoginDto.getLastName(),
+                              workerLoginDto.getEmail()));
     }
 
     private Callback<TableColumn<LeaveRequestDto, Date>, TableCell<LeaveRequestDto, Date>> dateCellFactory() {

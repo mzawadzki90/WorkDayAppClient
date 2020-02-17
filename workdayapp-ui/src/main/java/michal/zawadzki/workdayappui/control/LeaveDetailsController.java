@@ -17,6 +17,8 @@ import michal.zawadzki.workdayappclient.api.DictionariesDto;
 import michal.zawadzki.workdayappclient.api.DictionaryDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveType;
+import michal.zawadzki.workdayappclient.api.worker.login.WorkerLoginDto;
+import michal.zawadzki.workdayappui.ApplicationUser;
 import michal.zawadzki.workdayappui.ScreenInitializer;
 import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
@@ -45,6 +47,10 @@ public class LeaveDetailsController {
 
     private final WorkdayappClient workdayappClient;
 
+    private final ApplicationUser applicationUser;
+
+    private WorkerLoginDto workerLoginDto;
+
     private Stage stage;
 
     @FXML
@@ -70,17 +76,20 @@ public class LeaveDetailsController {
 
     public LeaveDetailsController(ApplicationContext applicationContext,
                                   ScreenInitializer screenInitializer,
-                                  WorkdayappClient workdayappClient) {
+                                  WorkdayappClient workdayappClient,
+                                  ApplicationUser applicationUser) {
         this.applicationContext = applicationContext;
         this.screenInitializer  = screenInitializer;
         this.workdayappClient   = workdayappClient;
+        this.applicationUser    = applicationUser;
     }
 
     @FXML
     public void initialize() {
-        stage = screenInitializer.getStage();
+        workerLoginDto = applicationUser.getApplicationUser();
+        stage          = screenInitializer.getStage();
 
-        final int freeDays = workdayappClient.getFreeDays(1);
+        final int freeDays = workdayappClient.getFreeDays(workerLoginDto.getId());
         freeDaysInput.setText(String.valueOf(freeDays));
 
         leaveTypeComboBox.getItems().addAll(LeaveType.values());
@@ -88,7 +97,8 @@ public class LeaveDetailsController {
 
         labourDaysInput.setText("0");
 
-        final DictionariesDto dictionariesDto = workdayappClient.listWorkerDictionariesWithoutId(1);
+        final DictionariesDto dictionariesDto =
+                workdayappClient.listWorkerDictionariesWithoutId(workerLoginDto.getId());
         replacementComboBox.getItems().addAll(Stream.concat(Stream.of(new DictionaryDto()),
                                                             dictionariesDto.getDictionaries().stream()).collect(
                 Collectors.toList()));
@@ -104,7 +114,7 @@ public class LeaveDetailsController {
             return;
         }
 
-        workdayappClient.createLeaveRequest(1, leaveRequestDto.get());
+        workdayappClient.createLeaveRequest(workerLoginDto.getId(), leaveRequestDto.get());
         applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "list"));
 
     }
@@ -235,7 +245,7 @@ public class LeaveDetailsController {
     }
 
     private boolean validateLabourDays(Integer labourDays) {
-        final int freeDays = workdayappClient.getFreeDays(1);
+        final int freeDays = workdayappClient.getFreeDays(workerLoginDto.getId());
         if (freeDays < labourDays) {
             showErrorAlert("Przekroczono dopuszczalny limit wolnych dni.");
             return false;
