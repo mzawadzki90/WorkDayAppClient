@@ -27,6 +27,8 @@ public class LeaveRequestDto {
     @NotNull
     private int days;
 
+    private String note;
+
     @JsonProperty("replacement_id")
     private Integer replacementId;
 

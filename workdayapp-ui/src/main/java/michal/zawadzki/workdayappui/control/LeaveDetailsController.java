@@ -219,6 +219,8 @@ public class LeaveDetailsController {
 
         leaveRequestDto.setReplacementId(replacementComboBox.getValue().getId());
 
+        leaveRequestDto.setNote(notesTextArea.getText());
+
         return Optional.of(leaveRequestDto);
     }
 

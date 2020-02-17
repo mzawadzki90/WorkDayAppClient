@@ -17,7 +17,7 @@ import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import static michal.zawadzki.workdayappui.util.AlertUtil.showErrorAlert;
+import static michal.zawadzki.workdayappui.util.AlertUtil.showWarningAlert;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
@@ -89,7 +89,7 @@ public class LoginController {
 
     private boolean validateLogin(String login) {
         if (isEmpty(login)) {
-            showErrorAlert("Należy podać login.");
+            showWarningAlert("Należy podać login.");
             return false;
         }
 
@@ -98,7 +98,7 @@ public class LoginController {
 
     private boolean validatePassword(String password) {
         if (isEmpty(password)) {
-            showErrorAlert("Należy podać hasło.");
+            showWarningAlert("Należy podać hasło.");
             return false;
         }
 
