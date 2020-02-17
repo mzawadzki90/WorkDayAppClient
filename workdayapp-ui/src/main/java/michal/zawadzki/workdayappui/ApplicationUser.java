@@ -19,10 +19,6 @@ public class ApplicationUser {
     }
 
     public void setApplicationUser(WorkerLoginDto applicationUser) {
-        if (this.applicationUser != null) {
-            return;
-        }
-
         this.applicationUser = applicationUser;
     }
 
