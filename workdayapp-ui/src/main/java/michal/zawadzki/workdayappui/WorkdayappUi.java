@@ -29,9 +29,16 @@ public class WorkdayappUi extends Application {
 
         private final String screenName;
 
+        private Object extra;
+
         public ScreenEvent(Stage primaryStage, String screenName) {
             super(primaryStage);
             this.screenName = screenName;
+        }
+
+        public ScreenEvent(Stage primaryStage, String screenName, Object extra) {
+            this(primaryStage, screenName);
+            this.extra = extra;
         }
 
         public Stage getStage() {
@@ -40,6 +47,10 @@ public class WorkdayappUi extends Application {
 
         public String getScreenName() {
             return screenName;
+        }
+
+        public Object getExtra() {
+            return extra;
         }
     }
 

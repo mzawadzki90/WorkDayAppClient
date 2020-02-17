@@ -24,6 +24,9 @@ public class ScreenController {
     @Value("classpath:/leave-details.fxml")
     private Resource leaveDetails;
 
+    @Value("classpath:/change-status.fxml")
+    private Resource changeStatus;
+
     private Map<String, Resource> screenMap;
 
     @PostConstruct
@@ -33,6 +36,7 @@ public class ScreenController {
         screenMap.put("list", leaveList);
         screenMap.put("details", leaveDetails);
         screenMap.put("workerList", workerLeaveList);
+        screenMap.put("changeStatus", changeStatus);
     }
 
     public Resource getScreenByName(String name) {

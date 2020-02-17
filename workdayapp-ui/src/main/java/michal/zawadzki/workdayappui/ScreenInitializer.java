@@ -23,6 +23,8 @@ public class ScreenInitializer implements ApplicationListener<WorkdayappUi.Scree
 
     private Stage stage;
 
+    private Object extra;
+
     public ScreenInitializer(@Value("${spring.application.ui.title}") String applicationTitle,
                              ApplicationContext applicationContext,
                              ScreenController screenController) {
@@ -34,6 +36,8 @@ public class ScreenInitializer implements ApplicationListener<WorkdayappUi.Scree
     @Override
     public void onApplicationEvent(WorkdayappUi.ScreenEvent event) {
         try {
+            extra = event.getExtra();
+
             final String screenName = event.getScreenName();
             final Resource screen = screenController.getScreenByName(screenName);
             FXMLLoader fxmlLoader = new FXMLLoader(screen.getURL());
@@ -55,5 +59,9 @@ public class ScreenInitializer implements ApplicationListener<WorkdayappUi.Scree
 
     public Stage getStage() {
         return stage;
+    }
+
+    public Object getExtra() {
+        return extra;
     }
 }
