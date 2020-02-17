@@ -115,6 +115,16 @@ public class LeaveDetailsController {
     }
 
     @FXML
+    public void onClearClick(ActionEvent actionEvent) {
+        tillDatePicker.setValue(null);
+        sinceDatePicker.setValue(null);
+        notesTextArea.setText(null);
+        labourDaysInput.setText("0");
+        leaveTypeComboBox.getSelectionModel().selectFirst();
+        replacementComboBox.getSelectionModel().selectFirst();
+    }
+
+    @FXML
     public void onSinceDateChanged(ActionEvent actionEvent) {
         setLabourDays();
     }
