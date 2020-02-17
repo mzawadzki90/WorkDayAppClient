@@ -27,15 +27,24 @@ public class LeaveRequestDto {
     @NotNull
     private int days;
 
-    private String note;
-
     @JsonProperty("replacement_id")
     private Integer replacementId;
+
+    private String note;
 
     @JsonProperty("created_at")
     private Date createdAt;
 
     @JsonProperty("modifiedAt")
     private Date modifiedAt;
+
+    @JsonProperty("worker_first_name")
+    private String workerFirstName;
+
+    @JsonProperty("worker_last_name")
+    private String workerLastName;
+
+    @JsonProperty("worker_email")
+    private String workerEmail;
 
 }

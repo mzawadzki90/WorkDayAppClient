@@ -18,6 +18,9 @@ public class ScreenController {
     @Value("classpath:/leave-list.fxml")
     private Resource leaveList;
 
+    @Value("classpath:/worker-leave-list.fxml")
+    private Resource workerLeaveList;
+
     @Value("classpath:/leave-details.fxml")
     private Resource leaveDetails;
 
@@ -29,6 +32,7 @@ public class ScreenController {
         screenMap.put("login", loginForm);
         screenMap.put("list", leaveList);
         screenMap.put("details", leaveDetails);
+        screenMap.put("workerList", workerLeaveList);
     }
 
     public Resource getScreenByName(String name) {

@@ -2,6 +2,8 @@ package michal.zawadzki.workdayappclient;
 
 import michal.zawadzki.workdayappclient.api.DictionariesDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
+import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatus;
+import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatusDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestsDto;
 import michal.zawadzki.workdayappclient.api.worker.login.CredentialDto;
 import michal.zawadzki.workdayappclient.api.worker.login.WorkerLoginDto;
@@ -12,6 +14,8 @@ import org.springframework.web.util.UriBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.Collections.singletonMap;
 
@@ -25,6 +29,15 @@ public class WorkdayappClient {
 
     public static void main(String[] args) {
         System.out.println("Created for development purposes.");
+    }
+
+    public LeaveRequestsDto listWorkerLeaveRequests() {
+        final UriBuilder uriBuilder = getUriBuilder();
+        final URI uri = uriBuilder
+                .path("api/leave/requests")
+                .build();
+
+        return restTemplate.getForObject(uri, LeaveRequestsDto.class);
     }
 
     public LeaveRequestsDto listLeaveRequestsByWorkerId(int workerId) {
@@ -46,6 +59,19 @@ public class WorkdayappClient {
                                      workerId));
 
         restTemplate.postForObject(uri, leaveRequestDto, Void.class);
+    }
+
+    public void updateLeaveRequestStatus(int workerId, int leaveId, LeaveRequestStatus status) {
+        final Map<String, Integer> pathParams = new HashMap<>();
+        pathParams.put("workerId", workerId);
+        pathParams.put("leaveId", leaveId);
+
+        final UriBuilder uriBuilder = getUriBuilder();
+        final URI uri = uriBuilder
+                .path("api/leave/requests/worker/{workerId}/leave/{leaveId}")
+                .build(pathParams);
+
+        restTemplate.put(uri, new LeaveRequestStatusDto(status));
     }
 
     public WorkerLoginDto login(@NotNull @Valid CredentialDto credentialDto) {

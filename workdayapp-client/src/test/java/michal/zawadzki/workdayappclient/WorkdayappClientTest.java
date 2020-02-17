@@ -2,6 +2,7 @@ package michal.zawadzki.workdayappclient;
 
 import michal.zawadzki.workdayappclient.api.DictionariesDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
+import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatus;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestsDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveType;
 import michal.zawadzki.workdayappclient.api.worker.Role;
@@ -24,6 +25,13 @@ class WorkdayappClientTest {
     @BeforeAll
     static void beforeAll() {
         workdayappClient = new WorkdayappClient(new RestTemplate());
+    }
+
+    @Test
+    void shouldListWorkerLeaveRequests() {
+        final LeaveRequestsDto leaveRequestsDto = workdayappClient.listWorkerLeaveRequests();
+
+        assertTrue(leaveRequestsDto.getLeaveRequests().size() > 0);
     }
 
     @Test
@@ -50,6 +58,11 @@ class WorkdayappClientTest {
     @Test
     void shouldCreateLeaveRequest() {
         workdayappClient.createLeaveRequest(1, createTestRequest());
+    }
+
+    @Test
+    void shouldUpdateLeaveRequestStatus() {
+        workdayappClient.updateLeaveRequestStatus(1, 1, LeaveRequestStatus.REJECTED);
     }
 
     @Test

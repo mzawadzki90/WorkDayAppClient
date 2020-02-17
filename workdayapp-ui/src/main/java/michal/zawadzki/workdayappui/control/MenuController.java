@@ -6,7 +6,10 @@ package michal.zawadzki.workdayappui.control;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import michal.zawadzki.workdayappclient.api.worker.Role;
 import michal.zawadzki.workdayappui.ApplicationUser;
 import michal.zawadzki.workdayappui.ScreenInitializer;
 import michal.zawadzki.workdayappui.WorkdayappUi;
@@ -22,6 +25,9 @@ public class MenuController {
 
     private final ApplicationUser applicationUser;
 
+    @FXML
+    public Menu yourLeavesM;
+
     public MenuController(ApplicationContext applicationContext,
                           ScreenInitializer screenInitializer,
                           ApplicationUser applicationUser) {
@@ -32,6 +38,12 @@ public class MenuController {
 
     @FXML
     public void initialize() {
+        if (applicationUser.getApplicationUser().getRole().equals(Role.DIRECTOR)) {
+            final MenuItem workersRequests = new MenuItem("Wnioski pracowników");
+            yourLeavesM.getItems().add(workersRequests);
+            workersRequests.addEventHandler(ActionEvent.ACTION, actionEvent -> applicationContext
+                    .publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "workerList")));
+        }
 
     }
 
