@@ -184,9 +184,9 @@ public class LeaveDetailsController {
 
         int workDays = 0;
 
-        //Return 0 if start and end are the same
+        //Return 1 if start and end are the same
         if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
-            return 0;
+            return 1;
         }
 
         if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
@@ -202,7 +202,7 @@ public class LeaveDetailsController {
             }
         } while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
 
-        return workDays + 2;
+        return workDays + 1;
     }
 
     private Optional<LeaveRequestDto> createLeaveRequestDto() {
@@ -237,7 +237,8 @@ public class LeaveDetailsController {
         }
         leaveRequestDto.setDays(labourDays);
 
-        leaveRequestDto.setReplacementId(replacementComboBox.getValue().getId());
+        final int replacementId = replacementComboBox.getValue().getId();
+        leaveRequestDto.setReplacementId(replacementId == 0 ? null : replacementId);
 
         leaveRequestDto.setNote(notesTextArea.getText());
 

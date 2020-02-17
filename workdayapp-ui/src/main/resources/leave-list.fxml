@@ -86,8 +86,8 @@
 								</TextField>
 							</children>
 						</HBox>
-						<TableView fx:id="leaveRequests" disable="true" prefHeight="366.0" prefWidth="1920.0"
-								   GridPane.columnSpan="2" GridPane.rowIndex="1">
+						<TableView fx:id="leaveRequests" prefHeight="366.0" prefWidth="1920.0" GridPane.columnSpan="2"
+								   GridPane.rowIndex="1">
 							<columns>
 								<TableColumn minWidth="200.0" prefWidth="520.0" text="Rodzaj wniosku">
 									<cellValueFactory>

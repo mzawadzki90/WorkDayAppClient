@@ -92,7 +92,7 @@ public class LeaveListController {
 
     private Callback<TableColumn<LeaveRequestDto, Date>, TableCell<LeaveRequestDto, Date>> dateCellFactory() {
         return column -> new TableCell<>() {
-            private final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            private final SimpleDateFormat format = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
 
             @Override
             protected void updateItem(Date item, boolean empty) {
