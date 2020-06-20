@@ -4,6 +4,12 @@
 */
 package michal.zawadzki.workdayappui.control;
 
+import static michal.zawadzki.workdayappui.ScreenName.LEAVE_REQUEST_DETAILS;
+import static michal.zawadzki.workdayappui.ScreenName.LEAVE_REQUEST_LIST;
+import static michal.zawadzki.workdayappui.ScreenName.LOGIN;
+import static michal.zawadzki.workdayappui.ScreenName.WORKERS_LEAVE_REQUEST_LIST;
+import static michal.zawadzki.workdayappui.ScreenName.WORKER_LIST;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -41,8 +47,8 @@ public class MenuController {
         if (applicationUser.getApplicationUser().getRole().equals(Role.DIRECTOR)) {
             final MenuItem workersRequests = new MenuItem("Wnioski pracowników");
             yourLeavesM.getItems().add(workersRequests);
-            workersRequests.addEventHandler(ActionEvent.ACTION, actionEvent -> applicationContext
-                    .publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "workerList")));
+            workersRequests.addEventHandler(ActionEvent.ACTION, actionEvent -> applicationContext.publishEvent(
+                    new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), WORKERS_LEAVE_REQUEST_LIST)));
         }
 
     }
@@ -50,18 +56,22 @@ public class MenuController {
     @FXML
     public void onLogOutClick(MouseEvent actionEvent) {
         applicationUser.setApplicationUser(null);
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "login"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), LOGIN));
     }
-
 
     @FXML
     public void OnNewLeaveRequestClick(ActionEvent actionEvent) {
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "details"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), LEAVE_REQUEST_DETAILS));
     }
 
     @FXML
     public void OnLeaveRequestClick(ActionEvent actionEvent) {
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "list"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), LEAVE_REQUEST_LIST));
+    }
+
+    @FXML
+    public void onWorkerListClick(MouseEvent mouseEvent) {
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), WORKER_LIST));
     }
 
 }

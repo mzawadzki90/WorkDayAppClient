@@ -1,5 +1,6 @@
 package michal.zawadzki.workdayappui;
 
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,8 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 public class ScreenInitializer implements ApplicationListener<WorkdayappUi.ScreenEvent> {
@@ -38,7 +37,7 @@ public class ScreenInitializer implements ApplicationListener<WorkdayappUi.Scree
         try {
             extra = event.getExtra();
 
-            final String screenName = event.getScreenName();
+            final ScreenName screenName = event.getScreenName();
             final Resource screen = screenController.getScreenByName(screenName);
             FXMLLoader fxmlLoader = new FXMLLoader(screen.getURL());
             fxmlLoader.setControllerFactory(applicationContext::getBean);

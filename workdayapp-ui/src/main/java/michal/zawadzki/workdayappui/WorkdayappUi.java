@@ -17,7 +17,7 @@ public class WorkdayappUi extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        applicationContext.publishEvent(new ScreenEvent(primaryStage, "login"));
+        applicationContext.publishEvent(new ScreenEvent(primaryStage, ScreenName.LOGIN));
     }
 
     @Override public void stop() throws Exception {
@@ -27,16 +27,16 @@ public class WorkdayappUi extends Application {
 
     public static class ScreenEvent extends ApplicationEvent {
 
-        private final String screenName;
+        private final ScreenName screenName;
 
         private Object extra;
 
-        public ScreenEvent(Stage primaryStage, String screenName) {
+        public ScreenEvent(Stage primaryStage, ScreenName screenName) {
             super(primaryStage);
             this.screenName = screenName;
         }
 
-        public ScreenEvent(Stage primaryStage, String screenName, Object extra) {
+        public ScreenEvent(Stage primaryStage, ScreenName screenName, Object extra) {
             this(primaryStage, screenName);
             this.extra = extra;
         }
@@ -45,7 +45,7 @@ public class WorkdayappUi extends Application {
             return ((Stage) getSource());
         }
 
-        public String getScreenName() {
+        public ScreenName getScreenName() {
             return screenName;
         }
 

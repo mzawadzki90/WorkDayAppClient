@@ -3,6 +3,9 @@
  */
 package michal.zawadzki.workdayappui.control;
 
+import static michal.zawadzki.workdayappui.util.AlertUtil.showWarningAlert;
+import static org.springframework.util.StringUtils.isEmpty;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,12 +16,10 @@ import michal.zawadzki.workdayappclient.api.worker.login.CredentialDto;
 import michal.zawadzki.workdayappclient.api.worker.login.WorkerLoginDto;
 import michal.zawadzki.workdayappui.ApplicationUser;
 import michal.zawadzki.workdayappui.ScreenInitializer;
+import michal.zawadzki.workdayappui.ScreenName;
 import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-
-import static michal.zawadzki.workdayappui.util.AlertUtil.showWarningAlert;
-import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 public class LoginController {
@@ -84,7 +85,7 @@ public class LoginController {
         }
 
         applicationUser.setApplicationUser(workerLoginDto);
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, "list"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, ScreenName.LEAVE_REQUEST_LIST));
     }
 
     private boolean validateLogin(String login) {

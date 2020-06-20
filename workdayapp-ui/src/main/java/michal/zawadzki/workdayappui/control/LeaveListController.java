@@ -4,7 +4,8 @@
 */
 package michal.zawadzki.workdayappui.control;
 
-import java.text.SimpleDateFormat;
+import static michal.zawadzki.workdayappui.util.DateUtil.dateCellFactory;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -12,16 +13,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
 import michal.zawadzki.workdayappclient.api.worker.login.WorkerLoginDto;
 import michal.zawadzki.workdayappui.ApplicationUser;
 import michal.zawadzki.workdayappui.ScreenInitializer;
+import michal.zawadzki.workdayappui.ScreenName;
 import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -80,30 +80,13 @@ public class LeaveListController {
 
     @FXML
     public void onAddNewClick(ActionEvent actionEvent) {
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "details"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), ScreenName.LEAVE_REQUEST_DETAILS));
     }
 
     private void setUserInfo() {
         appUserInfo.setText(
                 String.format("Witaj %s %s (%s)", workerLoginDto.getFirstName(), workerLoginDto.getLastName(),
                               workerLoginDto.getEmail()));
-    }
-
-    private Callback<TableColumn<LeaveRequestDto, Date>, TableCell<LeaveRequestDto, Date>> dateCellFactory() {
-        return column -> new TableCell<LeaveRequestDto, Date>() {
-
-            private final SimpleDateFormat format = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
-
-            @Override
-            protected void updateItem(Date item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    setText(format.format(item));
-                }
-            }
-        };
     }
 
 }

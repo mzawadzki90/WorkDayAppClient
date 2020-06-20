@@ -9,6 +9,7 @@ import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatus;
 import michal.zawadzki.workdayappui.ScreenInitializer;
+import michal.zawadzki.workdayappui.ScreenName;
 import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -45,13 +46,13 @@ public class ChangeStatusController {
 
     @FXML
     public void onRejectClick(ActionEvent actionEvent) {
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "workerList"));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), ScreenName.WORKERS_LEAVE_REQUEST_LIST));
     }
 
     @FXML
     public void onApproveClick(ActionEvent actionEvent) {
         workdayappClient.updateLeaveRequestStatus(selectedLeaveRequest.getWorkerId(), selectedLeaveRequest.getLeaveId(),
-                                                  statusComboBox.getValue());
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), "workerList"));
+                statusComboBox.getValue());
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(screenInitializer.getStage(), ScreenName.WORKERS_LEAVE_REQUEST_LIST));
     }
 }

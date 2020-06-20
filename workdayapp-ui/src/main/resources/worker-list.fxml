@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-			fx:controller="michal.zawadzki.workdayappui.control.LeaveListController">
+			fx:controller="michal.zawadzki.workdayappui.control.WorkerListController">
 	<children>
 		<ImageView fitHeight="39.0" fitWidth="200.0">
 			<image>
@@ -65,43 +65,43 @@
 							</GridPane.margin>
 						</HBox>
 						<HBox spacing="10.0" GridPane.columnIndex="1"/>
-						<TableView fx:id="leaveRequests" prefHeight="366.0" prefWidth="1920.0" GridPane.columnSpan="2"
+						<TableView fx:id="workers" prefHeight="366.0" prefWidth="1920.0" GridPane.columnSpan="2"
 								   GridPane.rowIndex="1">
 							<columns>
 								<TableColumn minWidth="45.0" prefWidth="45.0" text="Numer Pracownika">
 									<cellValueFactory>
-										<PropertyValueFactory property="type"/>
+										<PropertyValueFactory property="id"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn fx:id="leaveRequestSince" minWidth="200.0" prefWidth="272.0" text="Imię">
+								<TableColumn fx:id="workerFirstName" minWidth="200.0" prefWidth="272.0" text="Imię">
 									<cellValueFactory>
-										<PropertyValueFactory property="since"/>
+										<PropertyValueFactory property="firstName"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn fx:id="leaveRequestTill" minWidth="200.0" prefWidth="269.0" text="Nazwisko">
+								<TableColumn fx:id="workerLastName" minWidth="200.0" prefWidth="269.0" text="Nazwisko">
 									<cellValueFactory>
-										<PropertyValueFactory property="till"/>
+										<PropertyValueFactory property="lastName"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn minWidth="200.0" prefWidth="295.0" text="Stanowisko">
+								<TableColumn fx:id="workerCurrentPosition" minWidth="200.0" prefWidth="295.0" text="Stanowisko">
 									<cellValueFactory>
-										<PropertyValueFactory property="status"/>
+										<PropertyValueFactory property="position"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn fx:id="leaveRequestCreatedAt" minWidth="200.0" prefWidth="200.0" text="Zespół">
+								<TableColumn fx:id="workerDepartment" minWidth="200.0" prefWidth="200.0" text="Dział">
 									<cellValueFactory>
-										<PropertyValueFactory property="createdAt"/>
+										<PropertyValueFactory property="department"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn fx:id="leaveRequestModifiedAt" minWidth="200.0" prefWidth="200.0" text="Dział">
+								<TableColumn fx:id="workerTeam" minWidth="200.0" prefWidth="200.0" text="Zespół">
 									<cellValueFactory>
-										<PropertyValueFactory property="modifiedAt"/>
+										<PropertyValueFactory property="team"/>
 									</cellValueFactory>
 								</TableColumn>
-								<TableColumn fx:id="leaveRequestModifiedAt1" minWidth="200.0" prefWidth="200.0"
+								<TableColumn fx:id="workerSupervisor" minWidth="200.0" prefWidth="200.0"
 											 text="Bezpośredni przełożony">
 									<cellValueFactory>
-										<PropertyValueFactory property="modifiedAt"/>
+										<PropertyValueFactory property="supervisor"/>
 									</cellValueFactory>
 								</TableColumn>
 							</columns>

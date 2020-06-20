@@ -1,13 +1,19 @@
 package michal.zawadzki.workdayappui;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
+import static michal.zawadzki.workdayappui.ScreenName.CHANGE_LEAVE_REQUEST_STATUS;
+import static michal.zawadzki.workdayappui.ScreenName.LEAVE_REQUEST_DETAILS;
+import static michal.zawadzki.workdayappui.ScreenName.LEAVE_REQUEST_LIST;
+import static michal.zawadzki.workdayappui.ScreenName.LOGIN;
+import static michal.zawadzki.workdayappui.ScreenName.WORKERS_LEAVE_REQUEST_LIST;
+import static michal.zawadzki.workdayappui.ScreenName.WORKER_LIST;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ScreenController {
@@ -27,21 +33,24 @@ public class ScreenController {
     @Value("classpath:/change-status.fxml")
     private Resource changeStatus;
 
-    private Map<String, Resource> screenMap;
+    @Value("classpath:/worker-list.fxml")
+    private Resource workerList;
+
+    private Map<ScreenName, Resource> screenMap;
 
     @PostConstruct
     public void init() {
         screenMap = new HashMap<>();
-        screenMap.put("login", loginForm);
-        screenMap.put("list", leaveList);
-        screenMap.put("details", leaveDetails);
-        screenMap.put("workerList", workerLeaveList);
-        screenMap.put("changeStatus", changeStatus);
+        screenMap.put(LOGIN, loginForm);
+        screenMap.put(LEAVE_REQUEST_LIST, leaveList);
+        screenMap.put(LEAVE_REQUEST_DETAILS, leaveDetails);
+        screenMap.put(WORKERS_LEAVE_REQUEST_LIST, workerLeaveList);
+        screenMap.put(CHANGE_LEAVE_REQUEST_STATUS, changeStatus);
+        screenMap.put(WORKER_LIST, workerList);
     }
 
-    public Resource getScreenByName(String name) {
-        return Optional.ofNullable(screenMap.get(name))
-                       .orElseThrow(() -> new RuntimeException("Screen with given name not exists."));
+    public Resource getScreenByName(ScreenName name) {
+        return Optional.ofNullable(screenMap.get(name)).orElseThrow(() -> new RuntimeException("Screen with given name not exists."));
     }
 
 }
