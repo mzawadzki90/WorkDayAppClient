@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import michal.zawadzki.workdayappclient.api.DictionariesDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatus;
+import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatusDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestsDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveType;
 import michal.zawadzki.workdayappclient.api.worker.Role;
@@ -68,15 +69,14 @@ class WorkdayappClientTest {
     @Test
     @Ignore
     void shouldUpdateLeaveRequestStatus() {
-        workdayappClient.updateLeaveRequestStatus(1, 1, LeaveRequestStatus.REJECTED);
+        workdayappClient.updateLeaveRequestStatus(1, 1, new LeaveRequestStatusDto(LeaveRequestStatus.REJECTED, "TEST"));
     }
 
     @Test
     @Ignore
     void shouldLoginSuccessfully() {
-        final WorkerLoginDto workerLoginDto =
-                workdayappClient.login(CredentialDto.builder().login("jan.kowalski").password("test1234").build());
-
+        final WorkerLoginDto workerLoginDto = workdayappClient.login(
+                CredentialDto.builder().login("jan.kowalski").password("test1234").build());
 
         assertEquals(Role.REGULAR_EMPLOYEE, workerLoginDto.getRole());
         assertEquals("Jan", workerLoginDto.getFirstName());

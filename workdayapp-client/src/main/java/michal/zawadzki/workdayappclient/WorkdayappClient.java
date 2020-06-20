@@ -13,7 +13,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import michal.zawadzki.workdayappclient.api.DictionariesDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
-import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatus;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestStatusDto;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestsDto;
 import michal.zawadzki.workdayappclient.api.worker.WorkerDto;
@@ -56,7 +55,7 @@ public class WorkdayappClient {
         restTemplate.postForObject(uri, leaveRequestDto, Void.class);
     }
 
-    public void updateLeaveRequestStatus(int workerId, int leaveId, LeaveRequestStatus status) {
+    public void updateLeaveRequestStatus(int workerId, int leaveId, LeaveRequestStatusDto leaveRequestStatusDto) {
         final Map<String, Integer> pathParams = new HashMap<>();
         pathParams.put("workerId", workerId);
         pathParams.put("leaveId", leaveId);
@@ -64,7 +63,7 @@ public class WorkdayappClient {
         final UriBuilder uriBuilder = getUriBuilder();
         final URI uri = uriBuilder.path("api/leave/requests/worker/{workerId}/leave/{leaveId}").build(pathParams);
 
-        restTemplate.put(uri, new LeaveRequestStatusDto(status));
+        restTemplate.put(uri, leaveRequestStatusDto);
     }
 
     public WorkerLoginDto login(@NotNull @Valid CredentialDto credentialDto) {
