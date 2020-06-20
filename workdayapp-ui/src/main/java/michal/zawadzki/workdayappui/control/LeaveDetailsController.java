@@ -4,6 +4,19 @@
 */
 package michal.zawadzki.workdayappui.control;
 
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.DAY_OF_WEEK;
+import static java.util.Calendar.SATURDAY;
+import static java.util.Calendar.SUNDAY;
+import static java.util.Calendar.getInstance;
+import static michal.zawadzki.workdayappui.util.AlertUtil.showErrorAlert;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -23,20 +36,6 @@ import michal.zawadzki.workdayappui.ScreenInitializer;
 import michal.zawadzki.workdayappui.WorkdayappUi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.Calendar.DAY_OF_MONTH;
-import static java.util.Calendar.DAY_OF_WEEK;
-import static java.util.Calendar.SATURDAY;
-import static java.util.Calendar.SUNDAY;
-import static java.util.Calendar.getInstance;
-import static michal.zawadzki.workdayappui.util.AlertUtil.showErrorAlert;
 
 @Component
 public class LeaveDetailsController {
@@ -110,7 +109,7 @@ public class LeaveDetailsController {
     public void onSendClick(ActionEvent actionEvent) {
         final Optional<LeaveRequestDto> leaveRequestDto = createLeaveRequestDto();
 
-        if (leaveRequestDto.isEmpty()) {
+        if (!leaveRequestDto.isPresent()) {
             return;
         }
 
@@ -145,12 +144,15 @@ public class LeaveDetailsController {
     }
 
     private StringConverter<DictionaryDto> getDictionaryConverter() {
-        return new StringConverter<>() {
-            @Override public String toString(DictionaryDto dictionaryDto) {
+        return new StringConverter<DictionaryDto>() {
+
+            @Override
+            public String toString(DictionaryDto dictionaryDto) {
                 return Optional.ofNullable(dictionaryDto).map(DictionaryDto::getName).orElse("-");
             }
 
-            @Override public DictionaryDto fromString(String s) {
+            @Override
+            public DictionaryDto fromString(String s) {
                 return null;
             }
         };
