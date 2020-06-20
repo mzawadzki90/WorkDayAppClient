@@ -34,7 +34,7 @@ public class WorkerPresentationMapper {
     }
 
     private static String getFullName(SimplifiedWorkerDto simplifiedWorkerDto) {
-        return simplifiedWorkerDto.getFirstName() + " " + simplifiedWorkerDto.getLastName();
+        return String.format("%s %s", simplifiedWorkerDto.getFirstName(), simplifiedWorkerDto.getLastName());
     }
 
 }

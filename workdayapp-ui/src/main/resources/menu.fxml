@@ -9,6 +9,9 @@
 >
 	<menus>
 		<Menu fx:id="signOutM" mnemonicParsing="false">
+			<graphic>
+				<Label text="Wyloguj się" onMouseClicked="#onLogOutClick"/>
+			</graphic>
 		</Menu>
 		<Menu fx:id="yourProfileM" mnemonicParsing="false" text="Twój profil">
 			<items>

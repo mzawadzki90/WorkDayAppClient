@@ -1,7 +1,9 @@
-package michal.zawadzki.workdayappui.control;/*
+/*
     Created on 17/02/2020 by uex1421
  */
+package michal.zawadzki.workdayappui.control;
 
+import java.util.EnumSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -39,7 +41,7 @@ public class ChangeStatusController {
     @FXML
     public void initialize() {
         selectedLeaveRequest = (LeaveRequestDto) screenInitializer.getExtra();
-        statusComboBox.getItems().addAll(LeaveRequestStatus.values());
+        statusComboBox.getItems().addAll(EnumSet.of(LeaveRequestStatus.ACCEPTED, LeaveRequestStatus.REJECTED));
         statusComboBox.getSelectionModel().select(selectedLeaveRequest.getStatus());
     }
 

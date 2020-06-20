@@ -10,17 +10,16 @@ import java.util.Date;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import michal.zawadzki.workdayappclient.WorkdayappClient;
 import michal.zawadzki.workdayappclient.api.leave.LeaveRequestDto;
-import michal.zawadzki.workdayappui.ApplicationUser;
 import michal.zawadzki.workdayappui.ScreenInitializer;
 import michal.zawadzki.workdayappui.ScreenName;
 import michal.zawadzki.workdayappui.WorkdayappUi;
+import michal.zawadzki.workdayappui.model.WorkerPresentationView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -38,14 +37,13 @@ public class WorkerLeaveListController {
 
     private Stage stage;
 
+    private WorkerPresentationView workerPresentationView;
+
     @FXML
     public TableView<LeaveRequestDto> leaveRequests;
 
-    @FXML
-    public Label appUserInfo;
-
     public WorkerLeaveListController(WorkdayappClient workdayappClient, ApplicationContext applicationContext,
-            ScreenInitializer screenInitializer, ApplicationUser applicationUser) {
+            ScreenInitializer screenInitializer) {
         this.workdayappClient = workdayappClient;
         this.applicationContext = applicationContext;
         this.screenInitializer = screenInitializer;
@@ -54,6 +52,11 @@ public class WorkerLeaveListController {
     @FXML
     public void initialize() {
         stage = screenInitializer.getStage();
+
+        final Object extra = screenInitializer.getExtra();
+        if (extra instanceof WorkerPresentationView) {
+            workerPresentationView = (WorkerPresentationView) extra;
+        }
 
         leaveRequests.getColumns()
                 .stream()
@@ -73,7 +76,15 @@ public class WorkerLeaveListController {
         });
 
         final ObservableList<LeaveRequestDto> items = leaveRequests.getItems();
-        items.addAll(workdayappClient.listWorkerLeaveRequests().getLeaveRequests());
+
+        final List<LeaveRequestDto> leaveRequests;
+        if (workerPresentationView == null) {
+            leaveRequests = workdayappClient.listWorkerLeaveRequests().getLeaveRequests();
+        } else {
+            leaveRequests = workdayappClient.listLeaveRequestsByWorkerId(workerPresentationView.getId()).getLeaveRequests();
+        }
+
+        items.addAll(leaveRequests);
     }
 
 }
