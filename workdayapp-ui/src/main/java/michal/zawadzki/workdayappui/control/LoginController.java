@@ -76,7 +76,6 @@ public class LoginController {
         try {
             workerLoginDto = workdayappClient.login(CredentialDto.builder().login(login).password(password).build());
         } catch (Exception e) {
-            e.printStackTrace();
             return;
         }
 
@@ -85,7 +84,7 @@ public class LoginController {
         }
 
         applicationUser.setApplicationUser(workerLoginDto);
-        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, ScreenName.LEAVE_REQUEST_LIST));
+        applicationContext.publishEvent(new WorkdayappUi.ScreenEvent(stage, ScreenName.WORKER_LIST));
     }
 
     private boolean validateLogin(String login) {
