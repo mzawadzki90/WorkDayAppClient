@@ -48,7 +48,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </padding>
                 </HBox>
-                <Label fx:id="reasonLabel" text="Powód" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                <Label fx:id="reasonLabel" text="Powód(*):" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                     <padding>
                         <Insets right="10.0" top="10.0"/>
                     </padding>

@@ -3,12 +3,15 @@
  */
 package michal.zawadzki.workdayappui.control;
 
+import java.util.List;
 import java.util.stream.Collectors;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -22,6 +25,7 @@ import michal.zawadzki.workdayappui.mapper.WorkerPresentationMapper;
 import michal.zawadzki.workdayappui.model.WorkerPresentationView;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class WorkerListController {
@@ -38,8 +42,13 @@ public class WorkerListController {
 
     private ContextMenu contextMenu;
 
+    private ObservableList<WorkerPresentationView> items;
+
     @FXML
     public TableView<WorkerPresentationView> workers;
+
+    @FXML
+    public TextField searchInput;
 
     public WorkerListController(WorkdayappClient workdayappClient, ScreenInitializer screenInitializer,
             ApplicationEventPublisher applicationContext, ApplicationUser applicationUser) {
@@ -60,7 +69,9 @@ public class WorkerListController {
             }
         });
 
-        final ObservableList<WorkerPresentationView> items = workers.getItems();
+        searchInput.textProperty().addListener(geListenerForSearchInput());
+
+        items = workers.getItems();
         items.addAll(workdayappClient.listWorkersByKeyword(null)
                 .stream()
                 .map(WorkerPresentationMapper::toPresentationView)
@@ -73,6 +84,31 @@ public class WorkerListController {
         workerLeaveRequests.setOnAction(event -> applicationContext.publishEvent(
                 new WorkdayappUi.ScreenEvent(stage, ScreenName.WORKERS_LEAVE_REQUEST_LIST, workers.getSelectionModel().getSelectedItem())));
         contextMenu.getItems().add(workerLeaveRequests);
+    }
+
+    private ChangeListener<String> geListenerForSearchInput() {
+        return (observable, oldValue, newValue) -> {
+            if (oldValue.equals(newValue)) {
+                return;
+            }
+
+            List<WorkerPresentationView> workerPresentationViews;
+            final String trimmed = newValue.trim();
+            if (StringUtils.isEmpty(trimmed) || trimmed.length() < 3) {
+                workerPresentationViews = workdayappClient.listWorkersByKeyword(null)
+                        .stream()
+                        .map(WorkerPresentationMapper::toPresentationView)
+                        .collect(Collectors.toList());
+            } else {
+                workerPresentationViews = workdayappClient.listWorkersByKeyword(trimmed)
+                        .stream()
+                        .map(WorkerPresentationMapper::toPresentationView)
+                        .collect(Collectors.toList());
+            }
+
+            items.removeIf(worker -> true);
+            items.addAll(workerPresentationViews);
+        };
     }
 
 }
